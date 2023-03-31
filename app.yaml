@@ -1,4 +1,4 @@
-app.yaml
+%app.yaml%
 application: jquery-mobile-xss
 version: 1
 runtime: python27
@@ -12,9 +12,10 @@ handlers:
 libraries:
 - name: webapp2
   version: "2.5.2"
-  
+-------------------------------------------------------------------  
   
 %main.py%
+
 import webapp2
 
 

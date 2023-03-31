@@ -1,0 +1,41 @@
+app.yaml
+application: jquery-mobile-xss
+version: 1
+runtime: python27
+api_version: 1
+threadsafe: yes
+
+handlers:
+- url: /.*
+  script: main.APP
+
+libraries:
+- name: webapp2
+  version: "2.5.2"
+  
+  
+%main.py%
+import webapp2
+
+
+class MainHandler(webapp2.RequestHandler):
+
+  def get(self):  # pylint:disable-msg=invalid-name
+    """Handle GET requests."""
+    self.response.write("""
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>""")
+
+
+class RedirectHandler(webapp2.RequestHandler):
+
+  def get(self):
+    """Handle GET requests."""
+    self.redirect(str(self.request.get("url")))
+
+
+APP = webapp2.WSGIApplication([
+    ('/redirect', RedirectHandler),
+    ('/.*', MainHandler),
+], debug=True)

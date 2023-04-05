@@ -1,0 +1,22 @@
+class MainHandler(webapp2.RequestHandler):
+
+    def get(self):
+        """Handle GET requests."""
+        self.response.write("""
+            <link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+            <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+            <script src="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+            <form action="/" method="post">
+                <label for="name">Enter your name:</label>
+                <input type="text" name="name" id="name" />
+                <button type="submit">Submit</button>
+            </form>
+        """)
+
+    def post(self):
+        """Handle POST requests."""
+        name = self.request.get('name')
+        self.response.write("Hello, " + name + "!")
+        self.response.write("<script>alert('XSS vulnerability!')</script>")
+
+
